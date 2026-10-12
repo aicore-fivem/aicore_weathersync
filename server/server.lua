@@ -222,7 +222,7 @@ end)
 CreateThread(function()
     local previous = 0
     while true do
-        Wait(0)
+        Wait(1000)
         local newBaseTime = os.time(os.date("!*t")) / 2 + 360 --Set the server time depending of OS time
         if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
             previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
@@ -235,9 +235,13 @@ CreateThread(function()
 end)
 
 CreateThread(function()
+    local lastSyncedBase, lastSyncedOffset, lastSyncedFreeze = nil, nil, nil
     while true do
         Wait(2000)--Change to send every minute in game sync
-        TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
+        if baseTime ~= lastSyncedBase or timeOffset ~= lastSyncedOffset or freezeTime ~= lastSyncedFreeze then
+            TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
+            lastSyncedBase, lastSyncedOffset, lastSyncedFreeze = baseTime, timeOffset, freezeTime
+        end
     end
 end)
 
