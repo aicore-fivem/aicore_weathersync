@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'Syncs weather and time of day between players'
-repository 'https://github.com/0error-scripts/aicore_weathersync'
+repository 'https://github.com/aicore-fivem/aicore_weathersync'
 version '2.0.0'
 
 shared_scripts {
